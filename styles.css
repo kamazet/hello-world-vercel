@@ -1,0 +1,365 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.upload-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+h3 {
+    margin: 20px 0 10px;
+    color: #34495e;
+}
+
+p {
+    margin-bottom: 20px;
+    color: #7f8c8d;
+}
+
+.upload-area {
+    border: 2px dashed #3498db;
+    border-radius: 8px;
+    padding: 40px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-area:hover {
+    background-color: #f0f7ff;
+}
+
+.upload-area.dragover {
+    background-color: #e1f0fe;
+    border-color: #2980b9;
+}
+
+.pdf-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.upload-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.upload-button:hover {
+    background-color: #2980b9;
+}
+
+.file-info {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.submit-button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #27ae60;
+}
+
+.submit-button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.upload-status {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Dropdown styles */
+.dropdown-container {
+    position: relative;
+    width: 100%;
+}
+
+.category-input,
+.subcategory-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.description-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    min-height: 28px;
+    max-height: 56px;
+    line-height: 1.4;
+    overflow-y: hidden;
+    font-family: inherit;
+    transition: height 0.1s ease-in-out;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-option:hover {
+    background-color: #f5f7fa;
+}
+
+.dropdown-option.active {
+    background-color: #e3f2fd;
+    border-left: 3px solid #3498db;
+}
+
+/* Styles for subcategory options with category prefixes */
+.subcategory-text {
+    font-weight: normal;
+}
+
+.category-prefix {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-left: 5px;
+    font-style: italic;
+}
+
+/* Delete button styles */
+.delete-cell {
+    width: 40px;
+    text-align: center;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    padding: 0;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+/* Results section styles */
+.results-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.results-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.download-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    margin: 10px 0 20px;
+    text-align: center;
+    transition: background-color 0.3s;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.download-button:hover {
+    background-color: #2980b9;
+}
+
+.download-button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.download-status {
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.download-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.sample-section {
+    margin: 20px 0;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    table-layout: fixed; /* Use fixed table layout for better column width control */
+}
+
+/* Column width settings */
+.transaction-table th:nth-child(1), /* Delete button column */
+.transaction-table td:nth-child(1) {
+    width: 40px;
+}
+
+.transaction-table th:nth-child(2), /* Date column */
+.transaction-table td:nth-child(2) {
+    width: 70px;
+}
+
+.transaction-table th:nth-child(3), /* Category column */
+.transaction-table td:nth-child(3),
+.transaction-table th:nth-child(4), /* Subcategory column */
+.transaction-table td:nth-child(4) {
+    width: 120px;
+}
+
+.transaction-table th:nth-child(5), /* Amount column */
+.transaction-table td:nth-child(5) {
+    width: 80px;
+}
+
+.transaction-table th:nth-child(6), /* Description column */
+.transaction-table td:nth-child(6) {
+    width: auto; /* Take remaining space */
+    min-width: 250px; /* Ensure minimum width */
+}
+
+.transaction-table th {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #ddd;
+}
+
+.transaction-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.transaction-table .negative {
+    color: #e74c3c;
+}
+
+.transaction-table .positive {
+    color: #2ecc71;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    color: #7f8c8d;
+    font-style: italic;
+}
