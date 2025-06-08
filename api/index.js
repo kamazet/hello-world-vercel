@@ -52,7 +52,6 @@ async function processPdf(filePath) {
     const pdfData = await pdfParse(dataBuffer);
     const text = pdfData.text;
 
-    console.log(text); // For debugging, as in app.py
     // Optionally, write to a debug file if needed for complex cases
     // fs.writeFileSync(path.join(RESULTS_FOLDER, 'pdf_debug_js.txt'), text);
 

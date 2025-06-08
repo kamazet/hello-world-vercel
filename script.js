@@ -499,47 +499,118 @@ document.addEventListener('DOMContentLoaded', () => {
                 subcategoryContainer.appendChild(subcategoryDropdown);
                 subcategoryCell.appendChild(subcategoryContainer);
                 row.appendChild(subcategoryCell);
-                
+
+                // --- Amount Cell --- 
                 const amountCell = document.createElement('td');
-                if (transaction.Amount !== undefined && !isNaN(transaction.Amount)) {
-                    amountCell.textContent = `$${Math.abs(transaction.Amount).toFixed(2)}`;
-                    amountCell.className = transaction.Amount < 0 ? 'negative' : 'positive';
-                } else {
-                    amountCell.textContent = 'N/A';
+                const amountInput = document.createElement('textarea'); // Using textarea for amount
+                amountInput.className = 'amount-input'; // Styled via styles.css
+                amountInput.placeholder = 'Enter amount';
+                amountInput.dataset.index = index;
+                amountInput.rows = 1;
+                amountInput.style.resize = 'none';
+                amountInput.style.overflowY = 'hidden';
+                // Inline styles for edit mode behavior
+                amountInput.style.color = 'black'; 
+                amountInput.style.width = '100%';
+                amountInput.style.boxSizing = 'border-box';
+                amountInput.style.textAlign = 'right';
+
+                function setAmountDisplay(value) {
+                    amountCell.innerHTML = ''; // Clear previous content (input field or old span)
+                    const displaySpan = document.createElement('span');
+                    displaySpan.className = 'amount-display-span'; // Class for border/padding styling
+
+                    if (value !== undefined && !isNaN(value)) {
+                        displaySpan.textContent = `$${Math.abs(value).toFixed(2)}`;
+                        amountCell.className = value < 0 ? 'negative' : 'positive'; // For text color
+                    } else {
+                        displaySpan.textContent = 'N/A';
+                        amountCell.className = ''; // Reset text color class
+                    }
+                    amountCell.appendChild(displaySpan);
                 }
+
+                setAmountDisplay(transaction.Amount); // Initial display
                 row.appendChild(amountCell);
-                
-                // Create editable description cell with textarea
+
+                const handleSaveAmount = () => {
+                    const originalValue = amountInput._originalValueForEdit;
+                    const newValueString = amountInput.value.replace('$', '').trim();
+                    const newValue = parseFloat(newValueString);
+
+                    if (!isNaN(newValue)) {
+                        transaction.Amount = newValue;
+                    } else {
+                        transaction.Amount = originalValue; // Revert on invalid input
+                    }
+                    // Remove input field BEFORE updating display
+                    if (amountCell.contains(amountInput)) {
+                        amountCell.removeChild(amountInput);
+                    }
+                    setAmountDisplay(transaction.Amount);
+                };
+
+                const handleCancelAmount = () => {
+                    transaction.Amount = amountInput._originalValueForEdit; // Revert to value at start of edit
+                    // Remove input field BEFORE updating display
+                    if (amountCell.contains(amountInput)) {
+                        amountCell.removeChild(amountInput);
+                    }
+                    setAmountDisplay(transaction.Amount);
+                };
+
+                amountInput.addEventListener('blur', () => {
+                    setTimeout(handleSaveAmount, 100); // Timeout to allow other events like Enter keydown
+                });
+
+                amountInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        amountInput.blur(); // Triggers save via blur
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        handleCancelAmount();
+                    }
+                });
+
+                amountCell.addEventListener('click', () => {
+                    if (amountCell.contains(amountInput)) return; // Already editing
+
+                    amountInput._originalValueForEdit = transaction.Amount; // Store for revert
+                    amountCell.textContent = '';
+                    amountCell.className = '';
+                    amountInput.value = parseFloat(transaction.Amount).toFixed(2); // Set textarea value for editing
+                    amountCell.appendChild(amountInput);
+                    amountInput.focus();
+                    amountInput.select();
+                });
+
+                // --- Description Cell (restored to correct logic) ---
                 const descCell = document.createElement('td');
                 const descInput = document.createElement('textarea');
                 descInput.className = 'description-input';
                 descInput.value = transaction.Description || '';
                 descInput.placeholder = 'Enter description';
                 descInput.dataset.index = index;
-                descInput.rows = 1; // Start with 1 row
-                descInput.style.resize = 'none'; // Disable manual resizing
-                
-                // Auto-resize textarea based on content
+                descInput.rows = 1; 
+                descInput.style.resize = 'none';
+
                 const autoResizeTextarea = (element) => {
                     element.style.height = 'auto';
-                    const newHeight = Math.min(element.scrollHeight, 56); // Limit to ~2 lines (28px per line)
+                    const newHeight = Math.min(element.scrollHeight, 56); 
                     element.style.height = newHeight + 'px';
                 };
-                
-                // Initialize height
-                setTimeout(() => autoResizeTextarea(descInput), 0);
-                
-                // Update height on input
+
+                setTimeout(() => autoResizeTextarea(descInput), 0); 
+
                 descInput.oninput = function() {
                     autoResizeTextarea(this);
                 };
-                
-                // Update transaction data when description changes
+
                 descInput.onchange = function() {
                     transaction.Description = this.value;
                 };
                 
-                // Add textarea to cell
                 descCell.appendChild(descInput);
                 row.appendChild(descCell);
                 

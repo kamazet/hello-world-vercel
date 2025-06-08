@@ -17,7 +17,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     padding: 20px;
 }
 
@@ -140,12 +140,26 @@ p {
 }
 
 .category-input,
-.subcategory-input {
+.subcategory-input,
+.amount-input {
     width: 100%;
     padding: 6px 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+}
+
+.amount-display-span {
+    display: block; /* Allows it to take full width and have padding/border like an input */
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;     /* Matches other inputs */
+    font-family: inherit; /* Matches other inputs */
+    box-sizing: border-box;
+    text-align: right;   /* Amounts are typically right-aligned */
+    line-height: 1.4;    /* Consistent line height with other inputs */
+    min-height: 28px;    /* Consistent minimum height */
 }
 
 .description-input {
@@ -322,7 +336,7 @@ p {
 
 .transaction-table th:nth-child(5), /* Amount column */
 .transaction-table td:nth-child(5) {
-    width: 80px;
+    width: 120px;
 }
 
 .transaction-table th:nth-child(6), /* Description column */
