@@ -7,9 +7,9 @@
     { "src": "*.js", "use": "@vercel/static" },
     { "src": "assets/**", "use": "@vercel/static" }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/(.*)\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf|eot|otf|map)", "dest": "/$1.$2" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/index.js" },
+    { "source": "/:path*", "has": [{ "type": "file" }], "destination": "/:path*" },
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
